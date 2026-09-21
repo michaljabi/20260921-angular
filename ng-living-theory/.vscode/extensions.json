@@ -1,0 +1,25 @@
+{
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=827846
+  "recommendations": [
+    "angular.ng-template",
+    "cyrilletuzi.angular-schematics",
+    // dodatkowo:
+    "formulahendry.auto-rename-tag",
+    // do syntax check - jeszcze:
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    // testowanie:
+    "vitest.explorer",
+    // inne do testow:
+    "wallabyjs.wallaby-vscode",
+    // wygląd UI:
+    "johnpapa.vscode-peacock",
+    "pkief.material-icon-theme",
+    // pomoc do naszego projektu:
+    "humao.rest-client",
+    "hossaini.bootstrap-intellisense",
+    // git + nawigacja:
+    "eamodio.gitlens",
+    "christian-kohler.path-intellisense"
+  ]
+}
