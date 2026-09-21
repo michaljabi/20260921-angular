@@ -8,5 +8,9 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.html',
 })
 export class App {
-  protected readonly title = signal('auction-portal');
+  protected readonly title = signal('auction-portal__');
+
+  protected myTitle = 'Portal Aukcyjny ?!'
+
+  protected hiddenText = 'Jestem widoczny po najechaniu';
 }
