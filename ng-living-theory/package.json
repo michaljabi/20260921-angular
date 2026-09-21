@@ -8,7 +8,9 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint --fix",
-    "example-g01": "npx tsx ./src/app/g-signals/g01-simple-even-without-component.ts"
+    "example-g01": "npx tsx ./src/app/g-signals/g01-simple-even-without-component.ts",
+    "say": "cowsay Hello",
+    "list": "dir"
   },
   "private": true,
   "dependencies": {
