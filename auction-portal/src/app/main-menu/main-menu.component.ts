@@ -6,10 +6,16 @@ import { Component } from '@angular/core';
   styles: ``,
   template: `
     <nav class="navbar navbar-expand-lg navbar-light bg-light px-3 mb-3">
-      <button class="navbar-toggler" type="button">
+      <button (click)="handleClick()" class="navbar-toggler" type="button">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" [class.show]="true">
+      <div
+        (mouseover)="menuBackground = 'red'"
+        (mouseout)="menuBackground = ''"
+        class="collapse navbar-collapse"
+        [class.show]="isMenuOpen"
+        [style.backgroundColor]="menuBackground"
+      >
         <ul class="navbar-nav">
           <li class="nav-item">
             <a class="nav-link" href="/auctions">Aukcje</a>
@@ -25,4 +31,15 @@ import { Component } from '@angular/core';
     </nav>
   `,
 })
-export class MainMenuComponent {}
+export class MainMenuComponent {
+  isMenuOpen = false;
+  menuBackground = '';
+
+  handleClick() {
+    console.log('Jestem!');
+    // ternary operator można:
+    // this.isMenuOpen = this.isMenuOpen ? false : true;
+    // a potem refactor do postaci:
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+}
