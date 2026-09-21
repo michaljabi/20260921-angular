@@ -1,16 +1,13 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { HeaderComponent } from './header/header.component';
 
 @Component({
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, HeaderComponent],
   selector: 'app-root',
   styleUrl: './app.css',
   templateUrl: './app.html',
 })
 export class App {
-  protected readonly title = signal('auction-portal__');
-
-  protected myTitle = 'Portal Aukcyjny ?!'
-
   protected hiddenText = 'Jestem widoczny po najechaniu';
 }
