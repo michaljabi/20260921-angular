@@ -13,7 +13,7 @@ const DEFAULT_TITLE = 'Portal Aukcyjny'
     </header>
   `,
 })
-export class HeaderComponent {
+export default class HeaderComponent {
   protected readonly alreadyWorks = signal('już działa !');
 
   protected title = DEFAULT_TITLE;
