@@ -1,4 +1,5 @@
 import { Component, signal } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 // C# perspective
 // type MenuItem = {
@@ -12,7 +13,7 @@ interface MenuItem {
 }
 
 @Component({
-  imports: [],
+  imports: [RouterLink, RouterLinkActive],
   selector: 'app-main-menu',
   styles: ``,
   template: `
@@ -30,7 +31,7 @@ interface MenuItem {
         <ul class="navbar-nav">
           @for (item of items; track item.name) {
             <li class="nav-item">
-              <a class="nav-link" [href]="item.href">{{ item.name }}</a>
+              <a class="nav-link" [routerLink]="item.href" routerLinkActive="active">{{ item.name }}</a>
             </li>
           }
         </ul>

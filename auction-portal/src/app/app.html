@@ -1,7 +1,7 @@
 <app-header />
 <main class="container">
   <app-main-menu />
-  <div [title]="hiddenText">[podstrona] {{ { name: 'Michał' } }}</div>
+  <!-- <div [title]="hiddenText">[podstrona] {{ { name: 'Michał' } }}</div> -->
 
   <app-alert [myLuckyNumber]="9 + 20 * 2 + 1" />
   <!-- 
@@ -11,10 +11,12 @@
   Bo wszystko wrzucone w {{ }} - "na koniec dnia" to string!
   -->
   
+  <!--
   <app-alert text="Treść 1 komunikatu" type="alert-danger" />
   <app-alert text="Treść innego" type="alert-warning" />
   <app-alert [text]="hiddenText" />
   <app-alert [text]="testSignal()" />
+  -->
 
   <router-outlet />
 </main>
