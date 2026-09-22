@@ -41,6 +41,7 @@ interface MenuItem {
   `,
 })
 export class MainMenuComponent {
+  // Zadanie 12: przepraw isMenuOpen - na sygnał
   isMenuOpen = false;
   menuBackground = '';
 
