@@ -1,7 +1,5 @@
 import { Component, signal } from '@angular/core';
 
-
-
 // C# perspective
 // type MenuItem = {
 //   href: string;
@@ -11,7 +9,7 @@ import { Component, signal } from '@angular/core';
 interface MenuItem {
   href: string;
   name: string;
-};
+}
 
 @Component({
   imports: [],
@@ -23,7 +21,7 @@ interface MenuItem {
         <span class="navbar-toggler-icon"></span>
       </button>
       <div
-        (mouseover)="menuBackground = 'red'"
+        (mouseover)="menuBackground = '#ddd'"
         (mouseout)="menuBackground = ''"
         class="collapse navbar-collapse"
         [class.show]="isMenuOpen()"
@@ -42,7 +40,7 @@ interface MenuItem {
 })
 export class MainMenuComponent {
   // Zadanie 12: przepraw isMenuOpen - na sygnał
-  isMenuOpen = signal(true);
+  isMenuOpen = signal(false);
   menuBackground = '';
 
   // JS perspecive
@@ -66,7 +64,7 @@ export class MainMenuComponent {
     // this.isMenuOpen.set(!this.isMenuOpen());
     // this.isMenuOpen.set(!this.isMenuOpen());
     // 2 sposób (bezpieczna aktualizacja gdyby miałybyć tzw. "racing conditions")
-    this.isMenuOpen.update(value => !value)
+    this.isMenuOpen.update((value) => !value);
     // to to samo co taki zapis
     /*
     this.isMenuOpen.update(value => {
