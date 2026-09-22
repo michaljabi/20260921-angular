@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import HeaderComponent from './header/header.component';
-import { MainMenuComponent } from './main-menu/main-menu.component';
+import HeaderComponent from './common/header.component';
+import { MainMenuComponent } from './common/main-menu.component';
 import { AlertComponent } from './shared/alert.component';
 
 @Component({
@@ -28,7 +28,6 @@ export class App {
     }, 2000);
   }
 }
-
 
 /*
 
