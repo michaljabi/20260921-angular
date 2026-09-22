@@ -1,5 +1,5 @@
 import { AsyncPipe, JsonPipe } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { AuctionItem } from './auction-item';
 import { httpResource } from '@angular/common/http';
 import { AlertComponent } from '../shared/alert.component';
@@ -35,7 +35,8 @@ import { AlertComponent } from '../shared/alert.component';
     </section>
   `,
 })
-export class AuctionsPageComponent {
+export class AuctionsPageComponent implements OnInit, OnDestroy {
+  
   auctions = httpResource<AuctionItem[]>(() => 'http://localhost:3000/auctions');
 
   // auctions = signal<AuctionItem[]>([
@@ -71,4 +72,11 @@ export class AuctionsPageComponent {
 
   // single auction Promise:
   singleActionPromise = Promise.resolve(this.singleAuction);
+
+  ngOnInit(): void {
+    console.log('jest INIT')
+  }
+  ngOnDestroy(): void {
+    console.warn('jest DESTROY')
+  }
 }
