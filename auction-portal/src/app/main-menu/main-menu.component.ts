@@ -1,5 +1,18 @@
 import { Component } from '@angular/core';
 
+
+
+// C# perspective
+// type MenuItem = {
+//   href: string;
+//   name: string;
+// };
+
+interface MenuItem {
+  href: string;
+  name: string;
+};
+
 @Component({
   imports: [],
   selector: 'app-main-menu',
@@ -17,15 +30,11 @@ import { Component } from '@angular/core';
         [style.backgroundColor]="menuBackground"
       >
         <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="/auctions">Aukcje</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/promotions">Promocje</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/advices">Podpowiadamy</a>
-          </li>
+          @for (item of items; track item.name) {
+            <li class="nav-item">
+              <a class="nav-link" [href]="item.href">{{ item.name }}</a>
+            </li>
+          }
         </ul>
       </div>
     </nav>
@@ -34,6 +43,13 @@ import { Component } from '@angular/core';
 export class MainMenuComponent {
   isMenuOpen = false;
   menuBackground = '';
+
+  // JS perspecive
+  items: MenuItem[] = [
+    { href: '/auctions', name: 'Aukcje' },
+    { href: '/promotions', name: 'Promocje' },
+    { href: '/advices', name: 'Podpowiadamy' },
+  ];
 
   handleClick() {
     console.log('Jestem!');
