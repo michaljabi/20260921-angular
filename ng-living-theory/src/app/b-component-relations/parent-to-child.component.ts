@@ -26,7 +26,19 @@ export class ParentToChildComponent {
   fruitList = ['apple', 'banana', 'mango'];
   choice = '';
 
-  handleFruitClicked(fruit: string) {
-    this.choice = fruit;
+  // handleFruitClicked(fruit = 'apple') {
+  handleFruitClicked(fruit: string | number) {
+    // type guard z TS (zapewniam TS, że to co przypisuje to na 100% string!)
+    if (typeof fruit === 'string') {
+      this.choice = fruit;
+    } else {
+      console.log(fruit * 10);
+    }
   }
+
+  // nie ma przeładowywania metod :( w TS
+  // handleFruitClicked(fruit: number) {
+  // }
+
+  // Alternatywa:
 }
