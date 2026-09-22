@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 
 
@@ -26,7 +26,7 @@ interface MenuItem {
         (mouseover)="menuBackground = 'red'"
         (mouseout)="menuBackground = ''"
         class="collapse navbar-collapse"
-        [class.show]="isMenuOpen"
+        [class.show]="isMenuOpen()"
         [style.backgroundColor]="menuBackground"
       >
         <ul class="navbar-nav">
@@ -42,7 +42,7 @@ interface MenuItem {
 })
 export class MainMenuComponent {
   // Zadanie 12: przepraw isMenuOpen - na sygnał
-  isMenuOpen = false;
+  isMenuOpen = signal(true);
   menuBackground = '';
 
   // JS perspecive
@@ -57,6 +57,23 @@ export class MainMenuComponent {
     // ternary operator można:
     // this.isMenuOpen = this.isMenuOpen ? false : true;
     // a potem refactor do postaci:
-    this.isMenuOpen = !this.isMenuOpen;
+    //this.isMenuOpen = !this.isMenuOpen;
+    // vs Signal:
+
+    const myVal = this.isMenuOpen();
+
+    // this.isMenuOpen.set(!myVal);
+    // this.isMenuOpen.set(!this.isMenuOpen());
+    // this.isMenuOpen.set(!this.isMenuOpen());
+    // 2 sposób (bezpieczna aktualizacja gdyby miałybyć tzw. "racing conditions")
+    this.isMenuOpen.update(value => !value)
+    // to to samo co taki zapis
+    /*
+    this.isMenuOpen.update(value => {
+      
+      
+      return !value
+    })
+    */
   }
 }
