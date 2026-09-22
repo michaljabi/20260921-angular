@@ -6,7 +6,7 @@ import { Component, input } from '@angular/core';
   styles: ``,
   template: `
     <div class="alert" [class]="type()" role="alert">
-      {{ text() }} {{ myLuckyNumber() }}
+      {{ text() }} {{ myLuckyNumber() }} :)
     </div>
   `,
 })
