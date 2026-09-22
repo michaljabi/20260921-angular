@@ -29,7 +29,7 @@ import { CommonModule } from '@angular/common';
       <h4>TitleCase/LowerCase/UpperCase pipe</h4>
       <ul>
         <li>Bez pipe: {{ myText }}</li>
-        <li>Z użyciem lower: {{ myText | lowercase }}</li>
+        <li>Z użyciem lower: {{ myText | lowercase | titlecase | uppercase }}</li>
         <li>Z użyciem upper: {{ myText | uppercase }}</li>
         <li>Z użyciem title: {{ myText | titlecase }}</li>
       </ul>
