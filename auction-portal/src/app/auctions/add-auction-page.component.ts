@@ -1,7 +1,8 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { form, FormRoot, FormField } from '@angular/forms/signals';
+import { form, FormRoot, FormField, required, min } from '@angular/forms/signals';
 import { AuctionItem } from './auction-item';
 import { AuctionsService } from './auctions.service';
+import { AlertComponent } from '../shared/alert.component';
 
 // Początkowy koncept:
 // Pick<AuctionItem, 'title' | 'price'> & { imgId: number; description: string }
@@ -15,7 +16,7 @@ interface AuctionModel {
 }
 
 @Component({
-  imports: [FormRoot, FormField],
+  imports: [FormRoot, FormField, AlertComponent],
   selector: 'app-add-auction-page',
   styles: ``,
   template: `
@@ -27,7 +28,7 @@ interface AuctionModel {
         <form [formRoot]="auctionForm">
           <div class="form-group">
             <label for="auctionTitle">Nazwa aukcji</label>
-            <div class="input-group mb-3">
+            <div class="input-group mb-3 ">
               <div class="input-group-prepend">
                 <span class="input-group-text"> 📝 </span>
               </div>
@@ -38,6 +39,12 @@ interface AuctionModel {
                 [formField]="auctionForm.title"
               />
             </div>
+            @if (auctionForm.title().touched() && auctionForm.title().invalid()) {
+              @for (error of auctionForm.title().errors(); track error) {
+                <!-- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing -->
+                <app-alert [text]="error.message ?? ''" type="alert-danger" />
+              }
+            }
           </div>
           <div class="form-group">
             <label for="auctionPrice">Cena aukcji</label>
@@ -52,6 +59,12 @@ interface AuctionModel {
                 class="form-control"
               />
             </div>
+            @if (auctionForm.price().touched() && auctionForm.price().invalid()) {
+              @for (error of auctionForm.price().errors(); track error) {
+                <!-- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing -->
+                <app-alert [text]="error.message ?? ''" type="alert-danger" />
+              }
+            }
           </div>
 
           <div class="form-group">
@@ -76,7 +89,13 @@ interface AuctionModel {
             </div>
           </div>
           <div class="d-flex justify-content-end">
-            <button class="btn btn-primary" type="submit">Dodaj aukcję</button>
+            <button
+              class="btn btn-primary"
+              type="submit"
+              [style.opacity]="auctionForm().valid() ? 1 : 0.5"
+            >
+              Dodaj aukcję
+            </button>
           </div>
         </form>
       </div>
@@ -99,8 +118,10 @@ export class AddAuctionPageComponent {
 
   auctionForm = form(
     this.auctionModel,
-    (schema) => {
+    (schemaPath) => {
       // validate - robimy razem
+      required(schemaPath.title, { message: 'Tytuł aukcji musi być podany' });
+      min(schemaPath.price, 0, { message: 'Cena nie może być mniejsza niź 0' });
     },
     {
       submission: {
