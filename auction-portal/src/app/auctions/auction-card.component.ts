@@ -1,6 +1,10 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { AuctionItem } from './auction-item';
 
+
+// DUMMY COMPONENT - tylko komponent prezentacyjny
+// Re-używalny, tani w utrzymaniu
+// Super do testowania (nie trzeba mockować zależności )
 @Component({
   imports: [],
   selector: 'app-auction-card',
@@ -15,11 +19,18 @@ import { AuctionItem } from './auction-item';
       </p>
       <div class="d-flex justify-content-between align-content-center">
         <strong> {{ auction.price }} zł</strong>
-        <button class="btn btn-primary">[ + ]</button>
+        <button class="btn btn-primary" (click)="handleAddAuctionToCart()">[ + ]</button>
       </div>
     </div>
   </div>`,
 })
 export class AuctionCardComponent {
   item = input.required<AuctionItem>();
+  addToCart = output<AuctionItem>()
+
+
+  handleAddAuctionToCart() {
+     // console.log(this.item())
+     this.addToCart.emit(this.item())
+  }
 }
