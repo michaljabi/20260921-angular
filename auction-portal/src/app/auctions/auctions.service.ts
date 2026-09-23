@@ -3,6 +3,9 @@ import { computed, Service, Signal } from '@angular/core';
 import { AuctionItem } from './auction-item';
 
 //  stateless / statefull serwisy (prowadzący info)
+
+// jeśli poza tym dekoratorem @Service - nie będzie klasa AuctionsService występowała
+// w jakiekolwiek innej "tablicy providerów" - to będzie tylko jedna instancja tej klasy na CAŁA APLIKACJE!. (Singleton)
 @Service() // === dawniej: @Injectable({ providedIn: 'root' })
 export class AuctionsService {
   private baseURL = `http://localhost:3000`;
@@ -24,7 +27,7 @@ export class AuctionsService {
   );
 
   reloadAuctions() {
-    this.auctions.reload();
+    // this.auctions.reload();
   }
 
   addNew(auction: Omit<AuctionItem, 'id'>) {

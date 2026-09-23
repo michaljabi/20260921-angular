@@ -35,10 +35,14 @@ import { AuctionsService } from './auctions.service';
       </div>
     </section>
   `,
+  // https://angular.dev/guide/di/hierarchical-dependency-injection
+  // Inna hierachia tzw. Element Hierarchy (komponenty mogłyby rozmawiać na dalekie odległości)
+  // Nowa instacja tego komponentu spowoduje nową instancję AuctionsService
+  providers: [AuctionsService]
 })
 export class AuctionsPageComponent implements OnInit, OnDestroy {
   // Proszę Dependency Injector o instancje klasy: AuctionsService
-  auctionsService = inject(AuctionsService);
+  auctionsService = inject(AuctionsService, { skipSelf: true }); // chemy config zobaczyć (dlatego mimo wszystko omijamy Element Hierarchy).
 
   // auctions = signal<AuctionItem[]>([
   //   {
