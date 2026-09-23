@@ -3,6 +3,17 @@ import { form, FormRoot, FormField } from '@angular/forms/signals';
 import { AuctionItem } from './auction-item';
 import { AuctionsService } from './auctions.service';
 
+// Początkowy koncept:
+// Pick<AuctionItem, 'title' | 'price'> & { imgId: number; description: string }
+
+// Refactor
+interface AuctionModel {
+  title: AuctionItem['title'];
+  price: AuctionItem['price'];
+  description: string;
+  imgId: number;
+}
+
 @Component({
   imports: [FormRoot, FormField],
   selector: 'app-add-auction-page',
@@ -73,14 +84,14 @@ import { AuctionsService } from './auctions.service';
   `,
 })
 export class AddAuctionPageComponent {
-  auctionModel = signal<
-    Pick<AuctionItem, 'title' | 'price'> & { imgId: number; description: string }
-  >({
+  private readonly initialState = {
     title: '',
     imgId: 1,
     price: 0,
     description: '',
-  });
+  };
+
+  auctionModel = signal<AuctionModel>(this.initialState);
 
   imgUrl = computed(() => `https://picsum.photos/id/${this.auctionModel().imgId}/600/600`);
 
@@ -103,6 +114,7 @@ export class AddAuctionPageComponent {
 
           //
           // Najłatwiej - używając tzw. destrukturyzacji:
+          // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring
           const { title, price, description } = this.auctionModel();
 
           const newAuction: Omit<AuctionItem, 'id'> = {
@@ -114,7 +126,7 @@ export class AddAuctionPageComponent {
 
           this.auctionsService.addNew(newAuction);
           // po dodaniu
-          this.auctionModel.set({ title: '', imgId: 1, description: '', price: 0 })
+          this.auctionModel.set(this.initialState);
         },
       },
     },
