@@ -12,6 +12,7 @@ describe('TestMyBehaviourComponent', () => {
 
     fixture = TestBed.createComponent(TestMyBehaviourComponent);
     component = fixture.componentInstance;
+    fixture.autoDetectChanges();
   });
 
   it('should create', () => {
@@ -31,6 +32,8 @@ describe('TestMyBehaviourComponent', () => {
 
   it('should count up the likes - one click - one like', async () => {
     // Given (Arrange)
+
+    // jak natywnie w przeglądarce: https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector
     const h4Header = fixture.nativeElement.querySelector('h4');
     const likeButton = fixture.nativeElement.querySelector('button[title="I like"]');
 
