@@ -1,5 +1,7 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { form, FormRoot, FormField } from '@angular/forms/signals';
+import { AuctionItem } from './auction-item';
+import { AuctionsService } from './auctions.service';
 
 @Component({
   imports: [FormRoot, FormField],
@@ -32,7 +34,12 @@ import { form, FormRoot, FormField } from '@angular/forms/signals';
               <div class="input-group-prepend">
                 <span class="input-group-text"> 💲 </span>
               </div>
-              <input id="auctionPrice" type="number" name="price" class="form-control" />
+              <input
+                id="auctionPrice"
+                type="number"
+                [formField]="auctionForm.price"
+                class="form-control"
+              />
             </div>
           </div>
 
@@ -53,7 +60,7 @@ import { form, FormRoot, FormField } from '@angular/forms/signals';
                 id="auctionDescription"
                 rows="5"
                 class="form-control"
-                name="description"
+                [formField]="auctionForm.description"
               ></textarea>
             </div>
           </div>
@@ -66,18 +73,50 @@ import { form, FormRoot, FormField } from '@angular/forms/signals';
   `,
 })
 export class AddAuctionPageComponent {
-  auctionModel = signal({
+  auctionModel = signal<
+    Pick<AuctionItem, 'title' | 'price'> & { imgId: number; description: string }
+  >({
     title: '',
     imgId: 1,
+    price: 0,
+    description: '',
   });
 
   imgUrl = computed(() => `https://picsum.photos/id/${this.auctionModel().imgId}/600/600`);
 
-  auctionForm = form(this.auctionModel, () => {}, {
-    submission: {
-      action: async (field) => {
-        console.log('aukualna wartość fomularza', this.auctionModel());
+  private readonly auctionsService = inject(AuctionsService);
+
+  auctionForm = form(
+    this.auctionModel,
+    (schema) => {
+      // validate - robimy razem
+    },
+    {
+      submission: {
+        action: async () => {
+          console.log('aukualna wartość fomularza', this.auctionModel());
+          // Zadanie 26:
+          // 1. Użyj DI do AuctionsService - i wyślij formularz
+          // 2. Używając [formField] - zbierz pozostałe pola formularza
+          // 3. Przygotuj poprawny model danych dla metody .addNew()
+          // 4. Pokaż na konsoli - ale w (u mnie linii 46 auctions.service.ts)
+
+          //
+          // Najłatwiej - używając tzw. destrukturyzacji:
+          const { title, price, description } = this.auctionModel();
+
+          const newAuction: Omit<AuctionItem, 'id'> = {
+            title,
+            price,
+            description,
+            imgUrl: this.imgUrl(),
+          };
+
+          this.auctionsService.addNew(newAuction);
+          // po dodaniu
+          this.auctionModel.set({ title: '', imgId: 1, description: '', price: 0 })
+        },
       },
     },
-  });
+  );
 }
