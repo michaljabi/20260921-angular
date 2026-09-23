@@ -31,10 +31,16 @@ interface MenuItem {
         <ul class="navbar-nav">
           @for (item of items; track item.name) {
             <li class="nav-item">
-              <a class="nav-link" [routerLink]="item.href" routerLinkActive="active">{{ item.name }}</a>
+              <a class="nav-link" [routerLink]="item.href" routerLinkActive="active">{{
+                item.name
+              }}</a>
             </li>
           }
         </ul>
+      </div>
+      <div class="text-light d-flex gap-2">
+        <a class="btn btn-outline-primary" routerLink="/add-auction"> Dodaj </a>
+        <a class="btn btn-outline-secondary" routerLink="/cart"> Koszyk </a>
       </div>
     </nav>
   `,
