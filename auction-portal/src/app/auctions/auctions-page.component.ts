@@ -3,9 +3,10 @@ import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { AuctionItem } from './auction-item';
 import { httpResource } from '@angular/common/http';
 import { AlertComponent } from '../shared/alert.component';
+import { AuctionCardComponent } from './auction-card.component';
 
 @Component({
-  imports: [JsonPipe, AsyncPipe, AlertComponent],
+  imports: [JsonPipe, AsyncPipe, AlertComponent, AuctionCardComponent],
   selector: 'app-auctions-page',
   styles: ``,
   template: `
@@ -15,7 +16,7 @@ import { AlertComponent } from '../shared/alert.component';
         <div class="row">
           @for (auciton of auctions.value(); track auciton.id) {
             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-              {{ auciton | json }}
+              <app-auction-card [item]="auciton" />
             </div>
           }
         </div>

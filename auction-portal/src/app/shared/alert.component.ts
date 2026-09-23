@@ -7,6 +7,20 @@ import { Component, input } from '@angular/core';
   template: `
     <div class="alert" [class]="type()" role="alert">
       {{ text() }}
+
+      <!-- 
+      {{ text().title }}
+      {{ text().description }} 
+      
+      vs
+
+      @let sample = text();
+
+      {{ sample.title }}
+      {{ sample.description }} 
+      
+      -->
+
       <!-- {{ myLuckyNumber() }} :) -->
     </div>
   `,
