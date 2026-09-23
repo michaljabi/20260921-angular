@@ -13,21 +13,20 @@ import { AuctionsService } from './auctions.service';
   template: `
     <section>
       <h2>Lista naszych aukcji ({{ auctionsService.count() }})</h2>
-      @if (auctionsService.auctions.hasValue()) {
-        <div class="row">
-          @for (auciton of auctionsService.auctions.value(); track auciton.id) {
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-              <app-auction-card [item]="auciton" (addToCart)="handleAddToCart($event)" />
-            </div>
-          }
-        </div>
-      } @else if (auctionsService.auctions.error()) {
+      <div class="row">
+        @for (auciton of auctionsService.allAuctions(); track auciton.id) {
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <app-auction-card [item]="auciton" (addToCart)="handleAddToCart($event)" />
+          </div>
+        }
+      </div>
+      @if (auctionsService.error()) {
         <app-alert text="Nie udało się załadować aukcji" type="alert-danger" />
-      } @else if (auctionsService.auctions.isLoading()) {
+      } @else if (auctionsService.areAuctionsLoading()) {
         <app-alert text="Ładujemy aukcje" />
       }
       <hr class="my-5" />
-      <div >
+      <div>
         {{ singleAuction | json }}
       </div>
       <div>
@@ -38,9 +37,8 @@ import { AuctionsService } from './auctions.service';
   `,
 })
 export class AuctionsPageComponent implements OnInit, OnDestroy {
-  
   // Proszę Dependency Injector o instancje klasy: AuctionsService
-  auctionsService = inject(AuctionsService)
+  auctionsService = inject(AuctionsService);
 
   // auctions = signal<AuctionItem[]>([
   //   {
@@ -77,14 +75,14 @@ export class AuctionsPageComponent implements OnInit, OnDestroy {
   singleActionPromise = Promise.resolve(this.singleAuction);
 
   handleAddToCart(auction: AuctionItem) {
-    console.log('Aukcja zaraz zostanie dodana do koszyka', auction)
+    console.log('Aukcja zaraz zostanie dodana do koszyka', auction);
   }
 
   ngOnInit(): void {
-    console.log('jest INIT')
+    console.log('jest INIT');
     this.auctionsService.reloadAuctions();
   }
   ngOnDestroy(): void {
-    console.warn('jest DESTROY')
+    console.warn('jest DESTROY');
   }
 }
