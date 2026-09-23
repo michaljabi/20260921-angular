@@ -1,13 +1,14 @@
 import { Component, signal } from '@angular/core';
-import { FormField, form, minLength, required } from '@angular/forms/signals';
+import { FormField, form, minLength, required, FormRoot } from '@angular/forms/signals';
 
 @Component({
   selector: 'app-signal-driven-form',
-  imports: [FormField],
+  imports: [FormField, FormRoot],
   template: `
     <h2>Obsługa formularza</h2>
     <header class="subtitle is-family-monospace">signal-driven-form</header>
-    <form (submit)="handleFormSubmit($event)" novalidate>
+    <!-- <form (submit)="handleFormSubmit($event)" novalidate> -->
+    <form [formRoot]="sampleForm">
       <fieldset class="field ">
         <label>
           Name:
@@ -47,7 +48,9 @@ import { FormField, form, minLength, required } from '@angular/forms/signals';
         }
       </fieldset>
       <fieldset style="text-align: right">
-        <button class="button is-primary" type="submit">Wyślij formularz</button>
+        <button class="button is-primary" type="submit" (click)="handleFormSubmit($event)">
+          Wyślij formularz
+        </button>
       </fieldset>
       @if (sampleForm().invalid() && errorMessage()) {
         <div class="notification is-danger mt-3">

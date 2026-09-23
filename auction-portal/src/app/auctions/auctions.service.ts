@@ -3,6 +3,16 @@ import { computed, Service, Signal } from '@angular/core';
 import { AuctionItem } from './auction-item';
 import { environment } from '../../environments/environment'
 
+
+// SSoT -> Single Source of Truth
+// koncepcja w programowaniu gdzie dany "moduł" / "klasa" / "obiekt" - jest
+// tzw. jedynym źródłem prawdy - czyli odpowiada w całości za dostarczenie API / Logiki
+// do obsługi czegoś
+
+// ten serwis będzie źródłem prawdy (stanu serwerowego)
+// na temat Aukcji.
+
+
 //  stateless / statefull serwisy (prowadzący info)
 
 // jeśli poza tym dekoratorem @Service - nie będzie klasa AuctionsService występowała

@@ -1,27 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
+import { form, FormRoot, FormField } from '@angular/forms/signals';
 
 @Component({
-  imports: [],
+  imports: [FormRoot, FormField],
   selector: 'app-add-auction-page',
   styles: ``,
   template: `
     <section class="mt-2 row">
       <div class="col-6">
-        <img
-          class="img-thumbnail"
-          alt="Podgląd fotografii"
-          [src]="'https://picsum.photos/id/1/600/600'"
-        />
+        <img class="img-thumbnail" alt="Podgląd fotografii" [src]="imgUrl()" />
       </div>
       <div class="col-6">
-        <form>
+        <form [formRoot]="auctionForm">
           <div class="form-group">
             <label for="auctionTitle">Nazwa aukcji</label>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text"> 📝 </span>
               </div>
-              <input id="auctionTitle" type="text" name="title" class="form-control" />
+              <input
+                id="auctionTitle"
+                type="text"
+                class="form-control"
+                [formField]="auctionForm.title"
+              />
             </div>
           </div>
           <div class="form-group">
@@ -40,7 +42,7 @@ import { Component } from '@angular/core';
               <div class="input-group-prepend">
                 <span class="input-group-text"> 📸 </span>
               </div>
-              <input id="img" type="number" name="imgUrl" class="form-control" />
+              <input id="img" type="number" [formField]="auctionForm.imgId" class="form-control" />
             </div>
           </div>
 
@@ -63,4 +65,19 @@ import { Component } from '@angular/core';
     </section>
   `,
 })
-export class AddAuctionPageComponent {}
+export class AddAuctionPageComponent {
+  auctionModel = signal({
+    title: '',
+    imgId: 1,
+  });
+
+  imgUrl = computed(() => `https://picsum.photos/id/${this.auctionModel().imgId}/600/600`);
+
+  auctionForm = form(this.auctionModel, () => {}, {
+    submission: {
+      action: async (field) => {
+        console.log('aukualna wartość fomularza', this.auctionModel());
+      },
+    },
+  });
+}
