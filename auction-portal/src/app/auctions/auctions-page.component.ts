@@ -12,7 +12,7 @@ import { AuctionsService } from './auctions.service';
   styles: ``,
   template: `
     <section>
-      <h2>Lista naszych aukcji</h2>
+      <h2>Lista naszych aukcji ({{ auctionsService.count() }})</h2>
       @if (auctionsService.auctions.hasValue()) {
         <div class="row">
           @for (auciton of auctionsService.auctions.value(); track auciton.id) {
@@ -82,6 +82,7 @@ export class AuctionsPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     console.log('jest INIT')
+    this.auctionsService.reloadAuctions();
   }
   ngOnDestroy(): void {
     console.warn('jest DESTROY')
