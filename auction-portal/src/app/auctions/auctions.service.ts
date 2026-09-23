@@ -1,6 +1,7 @@
 import { httpResource } from '@angular/common/http';
 import { computed, Service, Signal } from '@angular/core';
 import { AuctionItem } from './auction-item';
+import { environment } from '../../environments/environment'
 
 //  stateless / statefull serwisy (prowadzący info)
 
@@ -8,7 +9,7 @@ import { AuctionItem } from './auction-item';
 // w jakiekolwiek innej "tablicy providerów" - to będzie tylko jedna instancja tej klasy na CAŁA APLIKACJE!. (Singleton)
 @Service() // === dawniej: @Injectable({ providedIn: 'root' })
 export class AuctionsService {
-  private baseURL = `http://localhost:3000`;
+  private baseURL = environment.baseURL;
 
   private auctions = httpResource<AuctionItem[]>(() => `${this.baseURL}/auctions`);
 
