@@ -1,8 +1,7 @@
-import { httpResource } from '@angular/common/http';
-import { computed, Service, Signal } from '@angular/core';
+import { HttpClient, httpResource } from '@angular/common/http';
+import { computed, inject, Service, Signal } from '@angular/core';
 import { AuctionItem } from './auction-item';
-import { environment } from '../../environments/environment'
-
+import { environment } from '../../environments/environment';
 
 // SSoT -> Single Source of Truth
 // koncepcja w programowaniu gdzie dany "moduł" / "klasa" / "obiekt" - jest
@@ -11,7 +10,6 @@ import { environment } from '../../environments/environment'
 
 // ten serwis będzie źródłem prawdy (stanu serwerowego)
 // na temat Aukcji.
-
 
 //  stateless / statefull serwisy (prowadzący info)
 
@@ -22,6 +20,8 @@ export class AuctionsService {
   private baseURL = environment.baseURL;
 
   private auctions = httpResource<AuctionItem[]>(() => `${this.baseURL}/auctions`);
+
+  private httpClient = inject(HttpClient);
 
   allAuctions = computed(() => {
     if (this.auctions.hasValue()) {
@@ -38,12 +38,13 @@ export class AuctionsService {
   );
 
   reloadAuctions() {
-    // this.auctions.reload();
+    this.auctions.reload();
   }
 
   addNew(auction: Omit<AuctionItem, 'id'>) {
     // addNew(auction: AuctionItem) {
-    console.log('Tutaj TODO, wysylka POST na Rest API', auction)
+    console.log('Tutaj TODO, wysylka POST na Rest API', auction);
     // auction.id
+    return this.httpClient.post<AuctionItem>(`${this.baseURL}/auctions`, auction);
   }
 }

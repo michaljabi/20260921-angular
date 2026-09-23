@@ -145,9 +145,12 @@ export class AddAuctionPageComponent {
             imgUrl: this.imgUrl(),
           };
 
-          this.auctionsService.addNew(newAuction);
-          // po dodaniu
-          this.auctionModel.set(this.initialState);
+          this.auctionsService.addNew(newAuction).subscribe((newAuction) => {
+            console.log('Nowa aukcja to', newAuction)
+            // po dodaniu
+            this.auctionModel.set(this.initialState);
+            this.auctionForm().reset();
+          });
         },
       },
     },
