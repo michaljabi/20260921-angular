@@ -1,9 +1,10 @@
 import { AsyncPipe, JsonPipe } from '@angular/common';
-import { Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { AuctionItem } from './auction-item';
 import { httpResource } from '@angular/common/http';
 import { AlertComponent } from '../shared/alert.component';
 import { AuctionCardComponent } from './auction-card.component';
+import { AuctionsService } from './auctions.service';
 
 @Component({
   imports: [JsonPipe, AsyncPipe, AlertComponent, AuctionCardComponent],
@@ -12,17 +13,17 @@ import { AuctionCardComponent } from './auction-card.component';
   template: `
     <section>
       <h2>Lista naszych aukcji</h2>
-      @if (auctions.hasValue()) {
+      @if (auctionsService.auctions.hasValue()) {
         <div class="row">
-          @for (auciton of auctions.value(); track auciton.id) {
+          @for (auciton of auctionsService.auctions.value(); track auciton.id) {
             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
               <app-auction-card [item]="auciton" (addToCart)="handleAddToCart($event)" />
             </div>
           }
         </div>
-      } @else if (auctions.error()) {
+      } @else if (auctionsService.auctions.error()) {
         <app-alert text="Nie udało się załadować aukcji" type="alert-danger" />
-      } @else if (auctions.isLoading()) {
+      } @else if (auctionsService.auctions.isLoading()) {
         <app-alert text="Ładujemy aukcje" />
       }
       <hr class="my-5" />
@@ -38,7 +39,8 @@ import { AuctionCardComponent } from './auction-card.component';
 })
 export class AuctionsPageComponent implements OnInit, OnDestroy {
   
-  auctions = httpResource<AuctionItem[]>(() => 'http://localhost:3000/auctions');
+  // Proszę Dependency Injector o instancje klasy: AuctionsService
+  auctionsService = inject(AuctionsService)
 
   // auctions = signal<AuctionItem[]>([
   //   {
